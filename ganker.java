@@ -25,7 +25,6 @@ public class ganker implements Runnable
 			}
 			catch(IOException e)
 			{
-				e.printStackTrace();
 				try
 				{
 					Socket s = new Socket("localhost", port);
