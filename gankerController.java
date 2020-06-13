@@ -2,14 +2,18 @@ package gankerController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 public class gankerController extends JFrame
 {
 	JTextField input, magnification;
 	static int serverPort;
 	static String serverIP;
+	ArrayList<String> commandHistory = new ArrayList<>();
+	int cmdHisIndex = 0;
 	public gankerController(String ip,int port)
 	{
 		serverIP = ip;
@@ -18,21 +22,38 @@ public class gankerController extends JFrame
 		Container c = getContentPane();
 		c.setLayout(new BorderLayout());
 		input = new JTextField(10);
+		input.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+				{
+					sendAction();
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_UP)
+				{
+					if(cmdHisIndex > 0)
+					{
+						cmdHisIndex--;
+						updateCmd();
+					}
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+				{
+					if(cmdHisIndex < commandHistory.size() - 1)
+					{
+						cmdHisIndex++;
+						updateCmd();
+					}
+				}
+			}
+		});
 		magnification = new JTextField(10);
 		magnification.setText("60000");
 		JButton submit = new JButton("send");
 		submit.addActionListener((e) ->
 		{
-			String txt = input.getText();
-			try
-			{
-				long input_number = Long.parseLong(txt);
-				sendMessage(input_number * Long.parseLong(magnification.getText()));
-			}
-			catch(NumberFormatException nfe)
-			{
-				sendMessage(txt);
-			}
+			sendAction();
 		});
 		JButton stop = new JButton("stop");
 		stop.addActionListener((e) ->
@@ -73,6 +94,28 @@ public class gankerController extends JFrame
 		setSize(330,100);
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
+	void updateCmd()
+	{
+		input.setText(commandHistory.get(cmdHisIndex));
+	}
+	void sendAction()
+	{
+		String txt = input.getText();
+		if(commandHistory.size() == 0 || !txt.equals(commandHistory.get(commandHistory.size() - 1)))
+		{
+			commandHistory.add(txt);
+			cmdHisIndex = commandHistory.size() - 1;
+		}
+		try
+		{
+			long input_number = Long.parseLong(txt);
+			sendMessage(input_number * Long.parseLong(magnification.getText()));
+		}
+		catch(NumberFormatException nfe)
+		{
+			sendMessage(txt);
+		}
 	}
 	void sendMessage(Object msg)
 	{
