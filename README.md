@@ -80,4 +80,5 @@ GUI操作：
 # 警語
 不要玩太過頭喔
 
-
+# 更多資訊
+https://incognitas.net/works/ganker-1/
