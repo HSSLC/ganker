@@ -70,9 +70,9 @@ GUI操作：
 ## Windows：  
 1. 使用[fileServer](https://github.com/HSSLC/simple-java-file-server/)，或是自己架簡單的檔案伺服器，反正要能從網路取得資源就是了  
 2. 然後將新的`ganker.jar`放入檔案伺服器的檔案系統，然後啟動檔案伺服器  
-3. 在`gankerController`中輸入`powershell -Command "(New-Object net.WebClient).downloadFile('這裡填入你的ganker.jar網路資源', 'ganker.jar')"`  
-例子：`powershell -Command "(New-Object net.WebClient).downloadFile('http://192.168.0.87/ganker.jar', 'ganker.jar')"`  
-4. 然後在`gankerController`中輸入`javaw -jar ganker.jar`重啟ganker
+3. 在`gankerController`中輸入`cmd:powershell -Command "(New-Object net.WebClient).downloadFile('這裡填入你的ganker.jar網路資源', 'ganker.jar')"`  
+例子：`cmd:powershell -Command "(New-Object net.WebClient).downloadFile('http://192.168.0.87/ganker.jar', 'ganker.jar')"`  
+4. 然後在`gankerController`中輸入`cmd:javaw -jar ganker.jar`重啟ganker
 ## 其他系統：
 看到**其他**這兩個字就知道發生什麼事了吧  
 對，窩不知道其他系統怎麼打指令，反正原理就是這樣，自行變通一下吧
